@@ -1,0 +1,2 @@
+INSERT INTO `available_currency` (`id`, `one_rs_coin`, `two_rs_coin`, `five_rs_coin`, `ten_rs_coin`, `one_rs_note`, `two_rs_note`, `five_rs_note`, `ten_rs_note`, `twenty_rs_note`, `fifty_rs_note`, `hundread_rs_note`, `two_hundred_rs_note`, `five_hundred_rs_note`, `two_thousand_rs_note`) VALUES
+(1,	1,	120,	200,	90,	0,	2,	2,	1,	1,	0,	230,	30,	1,	3);
