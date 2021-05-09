@@ -1,5 +1,6 @@
 # vending-machine
-Vending machine is api based system to perform vending machine operations. Its developed in Laravel-5.8
+Vending machine is api based system to perform vending machine operations. 
+<br>Its developed in Laravel-5.8
 <br>Postman Collection to api help added at repository
 <br>Table structure is added at repository
 <br>Base currency stock table must have value before start
