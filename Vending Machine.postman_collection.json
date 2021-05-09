@@ -1,0 +1,324 @@
+{
+	"info": {
+		"_postman_id": "241772e0-02c0-4f8e-a175-183aa8f950f4",
+		"name": "Vending Machine",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Vidhi Yewale",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "vidhi@yewale.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "c_password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "Endpoint : api/register\nUse : Its mainly for machine owner or operator. so that he can login all API, will be authenticated by his account.\nMethod : POST\nRequest : name,email,password,c_password\nResponse: \n{\n    \"success\": true,\n    \"data\": {\n        \"token\": \"eyJ0eXAiOiJKV1Qi\",\n        \"name\": \"Vidhi Yewale\"\n    },\n    \"message\": \"User register successfully.\"\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "vidhi@pramodyewale.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "Login User\nEndpoint : api/login\nUse : To login registered user.\nMethod : POST\nRequest : email,password\nResponse: \n{\n    \"success\": true,\n    \"data\": {\n        \"Authorization\": \"0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI\"\n    },\n    \"message\": \"User logged-in successful.\"\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Product Create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRjMDg4ODFhYWFhMTk3NDNiYzgxZDg1MDVkODZhOGI1NjIxOTU4MmFjY2QxNjk0MDA1M2E1NGFmMzg2OWUwZmFjODUwNTRiODUwYmIwOWU3In0.eyJhdWQiOiIzIiwianRpIjoiZGMwODg4MWFhYWExOTc0M2JjODFkODUwNWQ4NmE4YjU2MjE5NTgyYWNjZDE2OTQwMDUzYTU0YWYzODY5ZTBmYWM4NTA1NGI4NTBiYjA5ZTciLCJpYXQiOjE2MjA0NDQxOTcsIm5iZiI6MTYyMDQ0NDE5NywiZXhwIjoxNjUxOTgwMTk3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Uksg2VIi3LkFNNszmYZYFUQnOczQfkojLBGl3EYRxCfQ6dZLbNiYGmaqYT01KJUXiI7Jr0IPFMP6P1XsqyaKK4ACyAI4-rrVsjsdO4cdegV7BZ3J0_Kwnd5gMbYsmuTRtnrTeMUaglkqtWhywueKOE9OxmJQVQ67XYesWum8sJX2rNe1QZrjh_8gps1193Mf3qcpvdolGLsxY5vKgMKI3a6YKfwniAIm7Iack3yzQFNCK9m4HHpYEsxzVqIG25qu_3bsJwS29UmZ_Rq5XruLtELdXdPp4BzhvORbA8YT9M60OcNzNoLSLSvB_4tRtYsSpn7UnVYSSpHqr4CuaxLoN5qtTjKBkwSuu-ojUkQEI_uw4cKkJCwmrq3UdKPSDG9BHZRIulVJ0AJWGf1W4USKnL5syCgCnw4YbN8Z05G56SNxDbUvgjIMr8aw_ymJ64vK3ZipMkFk8jVpDvCHZw4qhf7PXM4mBy115sNSqBOTDyPrDhwifVy6gSt3orULHZ6o0Hrvp7VX1wXbYl3Lvl2BAfGE8PoOggrGaIwl1xzr4yIM9WcLawjbUBHWmNnRvQ6uFMvjQh973F0wyf-x_1RGuTeaPRLwAr9nIdeZg9MLBZPt4vaGDzpUB_zUtWxpkh4pgzpClfy3lSUnLjEw0j6waKpxiDnl14zmA1u5qHnuPig",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Pinapple Cake",
+							"type": "text"
+						},
+						{
+							"key": "detail",
+							"value": "750 GM Per Pack",
+							"type": "text"
+						},
+						{
+							"key": "sku_code",
+							"value": "Cake-07",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "700.00",
+							"type": "text"
+						},
+						{
+							"key": "available_stock",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/Pramod/Downloads/a59a988b-090e-44a7-a6f8-5db2b8a2a2ba.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products"
+					]
+				},
+				"description": "Product Create\nEndpoint : api/products\nUse : To Create product.\nMethod : POST\nRequest : name,detail,sku_code,price,available_stock\nResponse: \n{\n    \"success\": true,\n    \"data\": {\n        \"name\": \"Pinapple Cake\",\n        \"detail\": \"750 GM Per Pack\",\n        \"sku_code\": \"Cake-07\",\n        \"price\": \"700.00\",\n        \"available_stock\": \"2\",\n        \"image\": \"product_images/tTYgHBXDjSCqMvW5h0DEGH9jmYQwukVOOx1b0Qer.jpg\",\n        \"updated_at\": \"2021-05-09 06:53:46\",\n        \"created_at\": \"2021-05-09 06:53:46\",\n        \"id\": 12\n    },\n    \"message\": \"Product created successfully.\"\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Products List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRjMDg4ODFhYWFhMTk3NDNiYzgxZDg1MDVkODZhOGI1NjIxOTU4MmFjY2QxNjk0MDA1M2E1NGFmMzg2OWUwZmFjODUwNTRiODUwYmIwOWU3In0.eyJhdWQiOiIzIiwianRpIjoiZGMwODg4MWFhYWExOTc0M2JjODFkODUwNWQ4NmE4YjU2MjE5NTgyYWNjZDE2OTQwMDUzYTU0YWYzODY5ZTBmYWM4NTA1NGI4NTBiYjA5ZTciLCJpYXQiOjE2MjA0NDQxOTcsIm5iZiI6MTYyMDQ0NDE5NywiZXhwIjoxNjUxOTgwMTk3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Uksg2VIi3LkFNNszmYZYFUQnOczQfkojLBGl3EYRxCfQ6dZLbNiYGmaqYT01KJUXiI7Jr0IPFMP6P1XsqyaKK4ACyAI4-rrVsjsdO4cdegV7BZ3J0_Kwnd5gMbYsmuTRtnrTeMUaglkqtWhywueKOE9OxmJQVQ67XYesWum8sJX2rNe1QZrjh_8gps1193Mf3qcpvdolGLsxY5vKgMKI3a6YKfwniAIm7Iack3yzQFNCK9m4HHpYEsxzVqIG25qu_3bsJwS29UmZ_Rq5XruLtELdXdPp4BzhvORbA8YT9M60OcNzNoLSLSvB_4tRtYsSpn7UnVYSSpHqr4CuaxLoN5qtTjKBkwSuu-ojUkQEI_uw4cKkJCwmrq3UdKPSDG9BHZRIulVJ0AJWGf1W4USKnL5syCgCnw4YbN8Z05G56SNxDbUvgjIMr8aw_ymJ64vK3ZipMkFk8jVpDvCHZw4qhf7PXM4mBy115sNSqBOTDyPrDhwifVy6gSt3orULHZ6o0Hrvp7VX1wXbYl3Lvl2BAfGE8PoOggrGaIwl1xzr4yIM9WcLawjbUBHWmNnRvQ6uFMvjQh973F0wyf-x_1RGuTeaPRLwAr9nIdeZg9MLBZPt4vaGDzpUB_zUtWxpkh4pgzpClfy3lSUnLjEw0j6waKpxiDnl14zmA1u5qHnuPig",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products"
+					]
+				},
+				"description": "Products List\nEndpoint : api/products\nUse : To List out products.\nMethod : GET\nRequest : \nResponse: \n{\n    \"success\": true,\n    \"data\": [\n        {\n            \"id\": 3,\n            \"sku_code\": \"Chk01\",\n            \"name\": \"Chocolate Cookies\",\n            \"detail\": \"100 GM Per Pack\",\n            \"price\": \"95.00\",\n            \"available_stock\": \"500\",\n            \"image\": \"\",\n            \"created_at\": \"2021-05-07 18:17:42\",\n            \"updated_at\": \"2021-05-07 18:17:42\"\n        },\n        {\n            \"id\": 4,\n            \"sku_code\": \"ORG-01\",\n            \"name\": \"Orange Biscuit\",\n            \"detail\": \"150 GM Per Pack\",\n            \"price\": \"25.00\",\n            \"available_stock\": \"150\",\n            \"image\": \"\",\n            \"created_at\": \"2021-05-08 03:39:08\",\n            \"updated_at\": \"2021-05-08 03:39:08\"\n        }\n    ],\n    \"message\": \"Products retrieved successfully.\"\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjVkZDliMDFhZTFjNDliZmU0YTQxY2M4ZDkxYTA5NjM2NWNiNzAzZDMzNTFiYjY0MzVjNDgwNDk1ZTAyYzMyYjNhYmFmMjUzYTU5ZWMzODhjIn0.eyJhdWQiOiIzIiwianRpIjoiNWRkOWIwMWFlMWM0OWJmZTRhNDFjYzhkOTFhMDk2MzY1Y2I3MDNkMzM1MWJiNjQzNWM0ODA0OTVlMDJjMzJiM2FiYWYyNTNhNTllYzM4OGMiLCJpYXQiOjE2MjA0MTA3NzcsIm5iZiI6MTYyMDQxMDc3NywiZXhwIjoxNjUxOTQ2Nzc3LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.Z5ARJhlsd9HhN2VDtgPUqU9oH8HKMwjnJUfJOWukeHqhOo8OuTpoqRMh0qlLJrezFaw-wf0PsXyJYrGnpXcJVdmevYzaEiPpEoGxiUuTxcF4D4_ImDHAxKZEcfsmJ5c7n8D3FHIHEIlS4W1ZpthdIZeH0wekynW3MPCNY4W-XJwBEveeMWW8nBFpSJ2438Hmbfn4UCmsANGjbaXeBatrwvqfSAcT_YpD__OOpjJl1StHzTMXJaV84xxvUQqc8-W-hcjfI4lOD7O0EAmV11A5NGUEEmISigzyrXFanQcU3bRNm8aMtVN8k1njv4EEWvK9gP9V_AhyxPsrVBqjym50tw2uTrA2NafJzwPq4bpbu6wxFr4ed-Q6jRZ6fA0RvZjj0v-HeK9wzUCwWnXzWI22HSzOvsOQrHQGd_xdoiSxh1LVIYhSPMuH6T0BidEEDRlG1cNvjChV0W3vdvlktFYTx7ekwtvXxT9r8z_BQNAgS7Dt0qxN0sWCQv_xtfhaj7TpexTweCmd4sKTx3b7RKdm55UFXZS1hQD5F0RO4T4tTGTSXqHkQPicmU0biw__kknc1iJ6OX-Ekz5DKicD7fl5TMMOBJWQZua-XWaW9xqEb2342EnEtoaxmqnGlUPbqSuFYFV4N2PfnNp_p9rSCKlJzz3AN2umsBMXSDVi2tO4j50",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/products/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				},
+				"description": "Delete Product\nEndpoint : api/products/<product_id>\nUse : To List out products.\nMethod : DELETE\nRequest : \nResponse:"
+			},
+			"response": []
+		},
+		{
+			"name": "Buy Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjFlOTUwMmY3ZDBkMTVlYjIxOGE0NTZlNGFlY2U1NTlkYWNlZmE4Mzc0YzJjNmFiMWYwYmU4M2EwNzNmNGRlMTI4NzhmMmIxNGFmY2M4MjNhIn0.eyJhdWQiOiIxIiwianRpIjoiMWU5NTAyZjdkMGQxNWViMjE4YTQ1NmU0YWVjZTU1OWRhY2VmYTgzNzRjMmM2YWIxZjBiZTgzYTA3M2Y0ZGUxMjg3OGYyYjE0YWZjYzgyM2EiLCJpYXQiOjE2MjA1NzQ1NDEsIm5iZiI6MTYyMDU3NDU0MSwiZXhwIjoxNjUyMTEwNTQxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.UQ18eMuzWQZqbf2pshHhE-9YqeRqJKKy0g64tIG08e7b9lYw7NHoZWwnj9gyY5ovfOLT1Y2093HKYQ6M6YGmcJ4zfCaOIzt5Wjna97L6IGiDFa7-NdUwRMwAnkP_cJakacby_iGmN5TQcMQY8PTxuOiQIvPM8mZWYZXHpUEn5-mG8GZtfyuHdaqHHevUmSmnYhs3SVRKbbWdLneWaCTeaXgNhVBwn_513PHLva1YTOCVjcer6bGfSy_WyVbv_eAK6oHCxGVOcmoDCHadb-5SwtME28fCyPNz2-oCjTlfDxIRglHayVb96aaqr4Rl1xQ9Mg7fxuQu5Gv_alEIVPkrOox9rdKT_WVrVJn3ItTk9EcewW73zj1qcrHVSiOzd9vTVAQ6hNh0ivGBQH9b8EoGZk_Dql7ich096DasxfM2VkWusQU11CpWUZu5eStEJnX7Usykbfk8iHHxSNDYXdTHR1UjDKXpfFfFEvsq7IulbfolIqxZ_u3-pu7EPc5QS2Z4Mv2b7HU4laPE38jBZuNiMUbrBd6XdUoTg5u9_4wmNX5rqOMpMq1d1ZoO3RfjVlXKdvKgCqRd81ovny85k5QJKL41lJcb7MyYtxdFxOVNo-BLGqOoDhDfoNoCJXDnEhB2tmGuppO0uMtvkM_lhhOFRI0mi8nNCoB_Nc9z_QIGbAU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"item_list\": [\r\n        {\r\n            \"product_id\": \"3\",\r\n            \"quantity\": \"2\"\r\n        },\r\n        {\r\n            \"product_id\": \"4\",\r\n            \"quantity\": \"2\"\r\n        }\r\n    ],\r\n    \"currency\": {\r\n        \"one_rs_coin\": 3,\r\n        \"two_rs_coin\": 1,\r\n        \"five_rs_coin\": 1,\r\n        \"ten_rs_coin\": 1,\r\n        \"one_rs_note\": 1,\r\n        \"two_rs_note\": 2,\r\n        \"five_rs_note\": 0,\r\n        \"ten_rs_note\": 3,\r\n        \"twenty_rs_note\": 2,\r\n        \"fifty_rs_note\": 0,\r\n        \"hundread_rs_note\": 0,\r\n        \"two_hundred_rs_note\": 1,\r\n        \"five_hundred_rs_note\": 0,\r\n        \"two_thousand_rs_note\": 0\r\n    },\r\n    \"continue_with_available_items\": false,\r\n    \"change_priority\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/buy/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"buy",
+						"product"
+					]
+				},
+				"description": "Buy Product\nEndpoint : api/buy/product\nUse : To buy product.\nMethod : POST\nRequest : {\n    \"item_list\": [\n        {\n            \"product_id\": \"\",\n            \"quantity\": \"\"\n        }\n    ],\n    \"currency\": {\n        \"one_rs_coin\": 0,\n        \"two_rs_coin\": 0,\n        \"five_rs_coin\": 0,\n        \"ten_rs_coin\": 0,\n        \"one_rs_note\": 0,\n        \"two_rs_note\": 0,\n        \"five_rs_note\": 0,\n        \"ten_rs_note\": 0,\n        \"twenty_rs_note\": 0,\n        \"fifty_rs_note\": 0,\n        \"hundread_rs_note\": 1,\n        \"two_hundred_rs_note\": 1,\n        \"five_hundred_rs_note\": 2,\n        \"two_thousand_rs_note\": 0\n    },\n    \"continue_with_available_items\": false,\n    \"change_priority\": NULL\n}\nRequest Explaination :\nitem_list : which items user selected and it quantity\ncurrency : currency that user had added\ncontinue_with_available_items: in case few items not available then program will executed ahead with only for available items\nchange_priority: if user applicable for change then in which denomination change will retrieved. possible values: max_possible,only_coins,mix_denomination\nmax_possible gives better result than others.\nResponse:\n{\n    \"success\": true,\n    \"data\": {\n        \"booking_id\": \"60981c6939d07\",\n        \"payable_amt\": 240,\n        \"submitted_amount\": 295,\n        \"return_amt\": 55,\n        \"return_denomination_object\": {\n            \"one_rs_coin\": 0,\n            \"two_rs_coin\": 0,\n            \"five_rs_coin\": 1,\n            \"ten_rs_coin\": 1,\n            \"one_rs_note\": 0,\n            \"two_rs_note\": 0,\n            \"five_rs_note\": 0,\n            \"ten_rs_note\": 0,\n            \"twenty_rs_note\": 2,\n            \"fifty_rs_note\": 0,\n            \"hundread_rs_note\": 0,\n            \"two_hundred_rs_note\": 0,\n            \"five_hundred_rs_note\": 0,\n            \"two_thousand_rs_note\": 0\n        },\n        \"items_pay_to_users\": [\n            {\n                \"product_id\": \"3\",\n                \"quantity\": \"2\",\n                \"available_stock\": \"488\",\n                \"price\": \"95.00\",\n                \"sku_code\": \"Chk01\",\n                \"name\": \"Chocolate Cookies\",\n                \"detail\": \"100 GM Per Pack\",\n                \"image\": \"\"\n            },\n            {\n                \"product_id\": \"4\",\n                \"quantity\": \"2\",\n                \"available_stock\": \"146\",\n                \"price\": \"25.00\",\n                \"sku_code\": \"ORG-01\",\n                \"name\": \"Orange Biscuit\",\n                \"detail\": \"150 GM Per Pack\",\n                \"image\": \"\"\n            }\n        ]\n    },\n    \"message\": \"Please review order. Current order is valid only for 5 min.\"\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Review Purchase",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjFlOTUwMmY3ZDBkMTVlYjIxOGE0NTZlNGFlY2U1NTlkYWNlZmE4Mzc0YzJjNmFiMWYwYmU4M2EwNzNmNGRlMTI4NzhmMmIxNGFmY2M4MjNhIn0.eyJhdWQiOiIxIiwianRpIjoiMWU5NTAyZjdkMGQxNWViMjE4YTQ1NmU0YWVjZTU1OWRhY2VmYTgzNzRjMmM2YWIxZjBiZTgzYTA3M2Y0ZGUxMjg3OGYyYjE0YWZjYzgyM2EiLCJpYXQiOjE2MjA1NzQ1NDEsIm5iZiI6MTYyMDU3NDU0MSwiZXhwIjoxNjUyMTEwNTQxLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.UQ18eMuzWQZqbf2pshHhE-9YqeRqJKKy0g64tIG08e7b9lYw7NHoZWwnj9gyY5ovfOLT1Y2093HKYQ6M6YGmcJ4zfCaOIzt5Wjna97L6IGiDFa7-NdUwRMwAnkP_cJakacby_iGmN5TQcMQY8PTxuOiQIvPM8mZWYZXHpUEn5-mG8GZtfyuHdaqHHevUmSmnYhs3SVRKbbWdLneWaCTeaXgNhVBwn_513PHLva1YTOCVjcer6bGfSy_WyVbv_eAK6oHCxGVOcmoDCHadb-5SwtME28fCyPNz2-oCjTlfDxIRglHayVb96aaqr4Rl1xQ9Mg7fxuQu5Gv_alEIVPkrOox9rdKT_WVrVJn3ItTk9EcewW73zj1qcrHVSiOzd9vTVAQ6hNh0ivGBQH9b8EoGZk_Dql7ich096DasxfM2VkWusQU11CpWUZu5eStEJnX7Usykbfk8iHHxSNDYXdTHR1UjDKXpfFfFEvsq7IulbfolIqxZ_u3-pu7EPc5QS2Z4Mv2b7HU4laPE38jBZuNiMUbrBd6XdUoTg5u9_4wmNX5rqOMpMq1d1ZoO3RfjVlXKdvKgCqRd81ovny85k5QJKL41lJcb7MyYtxdFxOVNo-BLGqOoDhDfoNoCJXDnEhB2tmGuppO0uMtvkM_lhhOFRI0mi8nNCoB_Nc9z_QIGbAU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "booking_id",
+							"value": "60981dcde153c",
+							"type": "text"
+						},
+						{
+							"key": "action",
+							"value": "0",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/review/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"review",
+						"order"
+					]
+				},
+				"description": "Review Purchase\nEndpoint : api/buy/product\nUse : once confirm user can decide whether to complete order or cancel order. \naction=1 for complete, action=2 for cancel\nMethod : POST\nRequest\nbooking_id\naction\n-----------------\nCase: Complete\n{\n    \"success\": true,\n    \"data\": {\n        \"return_change_denomination\": {\n            \"one_rs_coin\": \"0\",\n            \"two_rs_coin\": \"0\",\n            \"five_rs_coin\": \"1\",\n            \"ten_rs_coin\": \"1\",\n            \"one_rs_note\": \"0\",\n            \"two_rs_note\": \"0\",\n            \"five_rs_note\": \"0\",\n            \"ten_rs_note\": \"0\",\n            \"twenty_rs_note\": \"2\",\n            \"fifty_rs_note\": \"0\",\n            \"hundread_rs_note\": \"0\",\n            \"two_hundred_rs_note\": \"0\",\n            \"five_hundred_rs_note\": \"0\",\n            \"two_thousand_rs_note\": \"0\"\n        },\n        \"hardware_command_to_dispatch_change\": \"0-0-1-1-0-0-0-0-2-0-0-0-0-0\",\n        \"hardware_command_to_dispatch_item\": \"3:2-4:2\"\n    },\n    \"message\": \"Product purchased successfull!\"\n}\n--------------------------\nCase:Cancel\n\n{\n    \"success\": true,\n    \"data\": {\n        \"hardware_command_to_dispatch_submitted_currency\": \"3-1-1-1-1-2-0-3-2-0-0-1-0-0\",\n        \"submitted_currency_denomination\": {\n            \"one_rs_coin\": \"3\",\n            \"two_rs_coin\": \"1\",\n            \"five_rs_coin\": \"1\",\n            \"ten_rs_coin\": \"1\",\n            \"one_rs_note\": \"1\",\n            \"two_rs_note\": \"2\",\n            \"five_rs_note\": \"0\",\n            \"ten_rs_note\": \"3\",\n            \"twenty_rs_note\": \"2\",\n            \"fifty_rs_note\": \"0\",\n            \"hundread_rs_note\": \"0\",\n            \"two_hundred_rs_note\": \"1\",\n            \"five_hundred_rs_note\": \"0\",\n            \"two_thousand_rs_note\": \"0\"\n        }\n    },\n    \"message\": \"purchase_detail!\"\n}"
+			},
+			"response": []
+		}
+	]
+}

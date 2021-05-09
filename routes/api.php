@@ -24,4 +24,5 @@ Route::post('login', 'API\RegisterController@login');
 Route::middleware('auth:api')->group( function () {
 	Route::resource('products', 'API\ProductController');
 	Route::post('buy/product', 'API\TransactionController@buy');
+	Route::post('review/order', 'API\TransactionController@review_purchase');
 });

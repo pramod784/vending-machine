@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsTable extends Migration
+class CreatePurchaseDataTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('purchase_data', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('sku_code')->unique();
-            $table->string('name');
-            $table->text('detail');
-            $table->string('price');
-            $table->string('available_stock');
-            $table->string('image')->nullable();
+            $table->string('booking_id');
+            $table->string('payable_amt');
+            $table->string('submitted_currency_object');
+            $table->string('returned_currency_object')->nullable();
+            $table->enum('booking_status',['initiated','complete','cancelled']);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
@@ -32,6 +31,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('purchase_data');
     }
 }

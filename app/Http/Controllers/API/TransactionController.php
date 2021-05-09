@@ -75,6 +75,8 @@ class TransactionController extends BaseController
         /* calculate submitted currency */
         
         $response = array();
+        $booking_id = uniqid();
+        $response['booking_id'] = $booking_id;
         $response['payable_amt'] = $payable_amt;
         $response['submitted_amount'] = $submitted_amount;
         if($change_return > 0)
@@ -92,14 +94,42 @@ class TransactionController extends BaseController
                 return $this->sendError("We dont have sufficient denomination for change . Please provide exact change!");
             }
             /* return change */
+            $response['booking_id'] = $booking_id;
             $response['return_amt'] = $result['original_change'];
             $response['return_denomination_object'] = $result['return_denomination_object'];
             /* return change */
         }else
         {
+            $response['booking_id'] = $booking_id;
             $response['return_amt'] = 0;
             $response['return_denomination_object'] = null;
         }
+
+        /* insert purchase data */
+            $insert_array = array(
+                'booking_id' => $booking_id,
+                'payable_amt' =>  $payable_amt,
+                'submitted_currency_object' => Common::generate_raw_object($submitted_currency_object),
+                'returned_currency_object' => Common::generate_raw_object($response['return_denomination_object']),
+                'booking_status'=>'initiated',
+                'created_at' => date('Y-m-d H:i:s',time())
+            );
+            $inserted_id = Query_helper::insert_purchase_data($insert_array);
+            //insert purchased items details
+            $items = array();
+            foreach ($stock_result['available_items'] as $key => $value) {
+                $items[] = array(
+                    'booking_id' => $inserted_id,
+                    'product_id' => $value["product_id"],
+                    'quantity' => $value["quantity"],
+                    'buy_price' => $value["price"],
+                    'created_at' => date('Y-m-d H:i:s',time())
+                );
+            }
+            $inserted_items = Query_helper::insert_purchased_items($items);
+            
+        /* insert purchase data */
+        
         $items_pay_to_users = array_map(function($arr1){
             if($arr1['image'] !="")
             {
@@ -109,42 +139,83 @@ class TransactionController extends BaseController
         },$stock_result['available_items']);
 
         $response['items_pay_to_users'] = $items_pay_to_users;
-        $hardware_commands = array();
-
-        /*DB::transaction(function () {
-            DB::table('users')->update(['votes' => 1]);
-
-            DB::table('posts')->delete();
-        });*/
-
-        /* update_product_stock */
-        foreach ($stock_result['available_items'] as $key => $value) {
-            $updated_quantity = $value['available_stock'] - $value['quantity'];
-            Query_helper::update_product_stock_by_product_id($value['product_id'],$updated_quantity);
-        }
-        /* update_product_stock */
-
-        /* update currency stock */        
-        // deduct returned currency from currency stock
-        if($response['return_denomination_object'] != null)
-        {
-            $to_update_on_currency = Common::generate_update_currency_object($response['return_denomination_object'],'deduct');
-            Query_helper::update_available_currency($to_update_on_currency);
-        }
-
-        // Add submitted currency to currency stock        
-        $to_update_on_currency = Common::generate_update_currency_object($submitted_currency_object,'add');
-        Query_helper::update_available_currency($to_update_on_currency);
-        /* update currency stock */
-
-        /* incase of any hardware involved hardware related commands will goes here */
-        $response['hardware_command_to_dispatch_change'] = Common::generate_hardware_object($response['return_denomination_object']);
         
-        $response['hardware_command_to_dispatch_item'] = implode('-',array_map(function($item){
-            return $item['product_id'].':'.$item['quantity'];
-        },$response['items_pay_to_users']));
+        return $this->sendResponse($response,'Please review order. Current order is valid only for 5 min.');
+    }
+    public function review_purchase(Request $request)
+    {
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'booking_id' => 'required',
+            'action' => 'required',
+        ]);
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+        $booking_id = $request->booking_id;
+        $action = $request->action;
+        $purchase_id = Query_helper::is_valid_booking_id($booking_id);
+        if($purchase_id)
+        {
+            $purchase_detail = Query_helper::get_purchase_detail($purchase_id);
+            $input['purchase_id'] = $purchase_id;
+            if($action == 1) // Approve purchase
+            {
+                /* update_product_stock */
+                foreach ($purchase_detail as $key => $value) {
+                    $updated_quantity = $value->available_stock - $value->quantity;
+                    Query_helper::update_product_stock_by_product_id($value->product_id,$updated_quantity);
+                }
+                /* update_product_stock */
 
-        /* incase of any hardware involved hardware related commands will goes here */
-        return $this->sendResponse($response,'Products purchased successfully.');
+                /* update currency stock */
+                // deduct returned currency from currency stock
+                $return_change_denomination = Common::convert_raw_currency_object_to_normal_object($purchase_detail[0]->returned_currency_object);
+                $to_update_on_currency = Common::generate_update_currency_object($return_change_denomination,'deduct');
+                Query_helper::update_available_currency($to_update_on_currency);
+                
+                // Add submitted currency to currency stock
+                $submitted_currency_object = Common::convert_raw_currency_object_to_normal_object($purchase_detail[0]->submitted_currency_object);                
+                $to_update_on_currency = Common::generate_update_currency_object($submitted_currency_object,'add');
+                Query_helper::update_available_currency($to_update_on_currency);
+
+                /* update currency stock */
+
+                /* Mark Current purchase successfull */
+
+                $update_array = array('booking_status'=>'complete');
+                $where_array = array('id'=>$purchase_id);
+                Query_helper::update_purchase_data($update_array,$where_array);
+
+                /* Mark Current purchase successfull */
+
+                /* incase of any hardware involved hardware related commands will goes here */
+                $response['return_change_denomination'] = $return_change_denomination;
+                $response['hardware_command_to_dispatch_change'] = $purchase_detail[0]->returned_currency_object;
+                
+                $response['hardware_command_to_dispatch_item'] = implode('-',array_map(function($item){
+                    return $item->product_id.':'.$item->quantity;
+                },$purchase_detail));
+                /* incase of any hardware involved hardware related commands will goes here */
+                return $this->sendResponse($response,'Product purchased successfull!');
+            } else if($action == 0) // Cancel purchase
+            {
+                /* Mark Current purchase cancel */
+                $update_array = array('booking_status'=>'cancelled');
+                $where_array = array('id'=>$purchase_id);
+                Query_helper::update_purchase_data($update_array,$where_array);
+                
+                /* Mark Current purchase cancel */
+                $response['hardware_command_to_dispatch_submitted_currency'] = $purchase_detail[0]->submitted_currency_object;
+                $response['submitted_currency_denomination'] = Common::convert_raw_currency_object_to_normal_object($purchase_detail[0]->submitted_currency_object);
+
+                return $this->sendResponse($response,'purchase_detail!');
+            } else {
+                return $this->sendError('Invalid action!');
+            }
+            
+        } else {
+            return $this->sendError('Invalid or expired booking id!');
+        }
     }
 }

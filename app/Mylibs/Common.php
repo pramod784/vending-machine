@@ -370,7 +370,7 @@ class Common {
         }
         return $currency_current_stock;
     }
-    public static function generate_hardware_object($currency)
+    public static function generate_raw_object($currency)
     {
         $currency_counts_array = array();
         $currency_counts_array[] = isset($currency["one_rs_coin"])?(int)$currency["one_rs_coin"]:0;
@@ -389,5 +389,44 @@ class Common {
         $currency_counts_array[] = isset($currency['two_thousand_rs_note'])?(int)$currency["two_thousand_rs_note"]:0;
         /* this will create object something like "1-1-1-1-1-1-1-1-1-1-1-1-12-1" */
         return implode('-',$currency_counts_array);
+    }
+    public static function convert_raw_currency_object_to_normal_object($raw_object)
+    {
+        $final_currency_object = array(
+            'one_rs_coin'=>0,
+            'two_rs_coin'=>0,
+            'five_rs_coin'=>0,
+            'ten_rs_coin'=>0,
+            'one_rs_note'=>0,
+            'two_rs_note'=>0,
+            'five_rs_note'=>0,
+            'ten_rs_note'=>0,
+            'twenty_rs_note'=>0,
+            'fifty_rs_note'=>0,
+            'hundread_rs_note'=>0,
+            'two_hundred_rs_note'=>0,
+            'five_hundred_rs_note'=>0,
+            'two_thousand_rs_note'=>0,
+        );
+        $keys = array_keys($final_currency_object);
+        $values = explode('-',$raw_object);
+        return array_combine($keys,$values);
+
+        /*$final_currency_object = array(
+            'one_rs_coin' => $$values[0],
+            'two_rs_coin' => $$values[1],
+            'five_rs_coin' => $$values[2],
+            'ten_rs_coin' => $$values[3],
+            'one_rs_note' => $$values[4],
+            'two_rs_note' => $$values[5],
+            'five_rs_note' => $$values[6],
+            'ten_rs_note' => $$values[7],
+            'twenty_rs_note' => $$values[8],
+            'fifty_rs_note' => $$values[9],
+            'hundread_rs_note' => $$values[10],
+            'two_hundred_rs_note' => $$values[11],
+            'five_hundred_rs_note' => $$values[12],
+            'two_thousand_rs_note' => $$values[13]
+        );*/
     }
 }

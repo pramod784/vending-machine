@@ -6,7 +6,6 @@ class Query_helper {
     {
     	$result = DB::table('products')
     	->select('*')
-    	/*->where('unique_site_id',$unique_site_id)*/
     	->get()->first();
     	if($result)
     	{
@@ -58,6 +57,91 @@ class Query_helper {
     {
     	$result = DB::table('available_currency')
             ->where('id', 1)
+            ->update($update_array);
+        return true;
+    }
+    public static function insert_purchase_data($insert_array)
+    {
+        $res = DB::table('purchase_data')->insert($insert_array);
+        if($res)
+        {
+           return DB::getPdo()->lastInsertId();
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+    public static function insert_purchased_items($insert_array)
+    {
+        $res = DB::table('purchased_items')->insert($insert_array);
+        if($res)
+        {
+           return DB::getPdo()->lastInsertId();
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+    public static function is_valid_booking_id($booking_id)
+    {
+        $result = DB::table('purchase_data')
+        ->select('*')
+        ->orderBy('id','DESC')
+        ->get()->first();
+        if($result)
+        {
+            if($result->booking_id == $booking_id && $result->booking_status == 'initiated' && ((time() - strtotime($result->created_at)) / 60) <= 5)
+            {
+                return $result->id;
+            }else
+            {
+                return false;
+            }
+        }else
+        {
+            return false;
+        }
+    }
+    public static function get_purchase_detail($purchase_id)
+    {
+        //DB::enableQueryLog();
+        $result = DB::table('purchased_items as pi')
+            ->select('pd.id','pd.booking_id','pd.payable_amt','pd.submitted_currency_object','pd.returned_currency_object','pd.booking_status','pi.product_id','pi.quantity','pi.buy_price','p.id as product_id','p.sku_code','p.name','p.detail','p.price','p.available_stock','p.image')
+            ->where('pd.id',$purchase_id)
+            ->join('purchase_data as pd','pd.id','=','pi.booking_id')
+            ->join('products as p','p.id','=','pi.product_id')
+            ->groupBy('pi.id')
+            ->get()->toArray();
+        //dd(DB::getQueryLog());
+        if($result)
+        {
+            return $result;
+        }
+        else
+        {
+            return array();
+        }
+    }
+    public static function get_product_data($product_id)
+    {
+        $result = DB::table('products')
+        ->select('*')
+        ->where('id',$product_id)
+        ->get()->first();
+        if($result)
+        {
+            return $result;
+        }else
+        {
+            return false;
+        }
+    }
+    public static function update_purchase_data($update_array,$where_array)
+    {
+        $result = DB::table('purchase_data')
+            ->where($where_array)
             ->update($update_array);
         return true;
     }
